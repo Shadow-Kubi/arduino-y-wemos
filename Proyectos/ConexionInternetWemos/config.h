@@ -2,8 +2,8 @@
 
 // visit io.adafruit.com if you need to create an account,
 // or if you need your Adafruit IO key.
-#define IO_USERNAME "Miguel's Galaxy M33 5G"
-#define IO_KEY "tziy6160"
+#define IO_USERNAME  "Shadow_Kubi"
+#define IO_KEY       "aio_BkbK23N0ITvVUFtmYW9ItPHii7xB"
 
 /******************************* WIFI **************************************/
 
@@ -20,8 +20,8 @@
 //   - Adafruit AirLift Shield -> https://www.adafruit.com/product/4285
 //   - Adafruit AirLift FeatherWing -> https://www.adafruit.com/product/4264
 
-#define WIFI_SSID "parzibyte"
-#define WIFI_PASS "hunter2"
+#define WIFI_SSID "Miguel's Galaxy M33 5G"
+#define WIFI_PASS "tziy6160"
 
 // uncomment the following line if you are using airlift
 // #define USE_AIRLIFT
