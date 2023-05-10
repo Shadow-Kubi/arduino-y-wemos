@@ -1,3 +1,5 @@
+// MAC de la placa: 0C:B8:15:C4:74:74
+
 #include <DallasTemperature.h>
 
 #include <OneWire.h>
