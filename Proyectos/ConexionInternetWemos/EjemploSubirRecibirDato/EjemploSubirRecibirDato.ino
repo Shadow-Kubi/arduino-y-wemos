@@ -1,4 +1,4 @@
-// Adafruit IO Subscription Example
+// Adafruit IO Publish & Subscribe Example
 //
 // Adafruit invests time and resources providing this open source code.
 // Please support Adafruit and open source hardware by purchasing
@@ -15,12 +15,31 @@
 // edit the config.h tab and enter your Adafruit IO credentials
 // and any additional configuration needed for WiFi, cellular,
 // or ethernet clients.
-#include "C:\Users\ACER-TALLER\Documents\Shadow_Kubi\arduino-y-wemos\Proyectos\ConexionInternetWemos\EjemploRecibirDato\config.h"
+#include "C:\Users\ACER-TALLER\Documents\Shadow_Kubi\arduino-y-wemos\Proyectos\ConexionInternetWemos\EjemploSubirRecibirDato\config.h"
 
 /************************ Example Starts Here *******************************/
 
+// this int will hold the current count for our sketch
+int count = 0;
+int prob;
+int dato;
+
+// Track time of last published messages and limit feed->save events to once
+// every IO_LOOP_DELAY milliseconds.
+//
+// Because this sketch is publishing AND subscribing, we can't use a long
+// delay() function call in the main loop since that would prevent io.run()
+// from being called often enough to receive all incoming messages.
+//
+// Instead, we can use the millis() function to get the current time in
+// milliseconds and avoid publishing until IO_LOOP_DELAY milliseconds have
+// passed.
+#define IO_LOOP_DELAY 5000
+unsigned long lastUpdate = 0;
+
 // set up the 'counter' feed
 AdafruitIO_Feed *counter = io.feed("counter");
+AdafruitIO_Feed *probabilidad = io.feed("prob");
 
 void setup() {
 
@@ -29,34 +48,28 @@ void setup() {
 
   // wait for serial monitor to open
   while(! Serial);
-
+  Serial.println();
   Serial.print("Connecting to Adafruit IO");
 
-  // start MQTT connection to io.adafruit.com
+  // connect to io.adafruit.com
   io.connect();
 
   // set up a message handler for the count feed.
   // the handleMessage function (defined below)
   // will be called whenever a message is
   // received from adafruit io.
-  counter->onMessage(handleMessage);
+  probabilidad->onMessage(handleMessage);
 
-  // wait for an MQTT connection
-  // NOTE: when blending the HTTP and MQTT API, always use the mqttStatus
-  // method to check on MQTT connection status specifically
-  while(io.mqttStatus() < AIO_CONNECTED) {
+  // wait for a connection
+  while(io.status() < AIO_CONNECTED) {
     Serial.print(".");
     delay(500);
   }
 
-  // Because Adafruit IO doesn't support the MQTT retain flag, we can use the
-  // get() function to ask IO to resend the last value for this feed to just
-  // this MQTT client after the io client is connected.
-  counter->get();
-
   // we are connected
   Serial.println();
   Serial.println(io.statusText());
+  probabilidad->get();
 
 }
 
@@ -68,8 +81,24 @@ void loop() {
   // io.adafruit.com, and processes any incoming data.
   io.run();
 
-  // Because this sketch isn't publishing, we don't need
-  // a delay() in the main program loop.
+  if (millis() > (lastUpdate + IO_LOOP_DELAY)) {
+    // save count to the 'counter' feed on Adafruit IO
+
+    count = random(-prob, prob + 1);
+  
+    Serial.println("------------------------------");
+    Serial.print("receiving -> ");
+    Serial.println(prob);
+    Serial.print("sending -> ");
+    Serial.println(count);
+
+    counter->save(count);
+
+    // increment the count by 1
+
+    // after publishing, store the current time
+    lastUpdate = millis();
+  }
 
 }
 
@@ -78,7 +107,6 @@ void loop() {
 // the counter feed in the setup() function above.
 void handleMessage(AdafruitIO_Data *data) {
 
-  Serial.print("received <- ");
-  Serial.println(data->value());
+  prob = String(data->value()).toInt();
 
 }

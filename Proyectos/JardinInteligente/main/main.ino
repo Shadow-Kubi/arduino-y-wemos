@@ -12,7 +12,6 @@
 
 #define DHTTYPE DHT11
 
-// const byte pinBomba = 2; //Es posible que se trate de un pin analógico.
 const byte pinCaudal = 14;
 const byte pinDHT = 12; //Es posible que se trate de un pin analógico.
 const byte pinLDR = 2;

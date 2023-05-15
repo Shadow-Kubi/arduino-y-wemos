@@ -1,4 +1,4 @@
-#include "C:\Users\Shadow_Kubi\Documents\GitHub\arduino-y-wemos\Proyectos\ConexionInternetWemos\EjemploSubirDato\config.h"
+#include "C:\Users\ACER-TALLER\Documents\Shadow_Kubi\arduino-y-wemos\Proyectos\ConexionInternetWemos\EjemploSubirDato\config.h"
 
 float random_float = 0;
 
