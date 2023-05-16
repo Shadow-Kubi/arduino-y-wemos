@@ -1,8 +1,8 @@
 // MAC de la placa: 0C:B8:15:C4:74:74
 
-#include <DallasTemperature.h>
+// #include <DallasTemperature.h>
 
-#include <OneWire.h>
+// #include <OneWire.h>
 
 //#include <RTClib.h>
 
@@ -17,7 +17,7 @@ const byte pinDHT = 12; //Es posible que se trate de un pin analógico.
 const byte pinLDR = 2;
 const byte pinHumedad = 4;
 // const byte pinRTC = 7; //Quizás haya que crear otro del RTC
-const byte pinTemperatura = 39;
+const byte pinTemperatura = 36;
 const byte pinRele = 13;
 
 int humedad_suelo;
@@ -33,14 +33,15 @@ String hora; //Utilizar String para obtener la hora completa. Buscar más inform
 
 DHT dht(pinDHT, DHTTYPE);
 //RTC_DS3231 rtc;
-OneWire oneWireBus(pinTemperatura);
-DallasTemperature sensor(&oneWireBus);
+// OneWire oneWireBus(pinTemperatura);
+// DallasTemperature sensor(&oneWireBus);
 
 void setup()
 {
   Serial.begin(9600);
   dht.begin();
   attachInterrupt(digitalPinToInterrupt(pinCaudal), ISRCountPulse, RISING);
+  // sensor.begin(); 
 
   // if (rtc.lostPower()) {
   //   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
@@ -53,8 +54,7 @@ void loop()
 {
   humedad_suelo = medirHumedadSuelo();
   humedad_ambiente = medirHT("humedad");
-  sensor.requestTemperatures();
-  temperatura_suelo = sensor.getTempCByIndex(0);
+  // temperatura_suelo = medirTemperaturaSuelo();
   temperatura_ambiente = medirHT("temperatura");
   luz = medirLuz();
   caudal = medirCaudal();

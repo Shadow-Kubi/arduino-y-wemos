@@ -53,6 +53,12 @@ int medirLuz()
   return fluz;
 }
 
+// double medirTemperaturaSuelo()
+// {
+//   sensor.requestTemperatures();
+//   return sensor.getTempCByIndex(0);
+// }
+
 //Funciones para medir el caudal.
 
 float medirCaudal()
