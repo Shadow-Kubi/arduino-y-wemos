@@ -53,37 +53,37 @@ int medirLuz()
   return fluz;
 }
 
-// double medirTemperaturaSuelo()
-// {
-//   sensor.requestTemperatures();
-//   return sensor.getTempCByIndex(0);
-// }
+double medirTemperaturaSuelo()
+{
+  sensor.requestTemperatures();
+  return sensor.getTempCByIndex(0);
+}
 
 //Funciones para medir el caudal.
 
-float medirCaudal()
-{
-  fcaudal = GetFrequency() / factorK;
-  return fcaudal;
+// float medirCaudal()
+// {
+//   fcaudal = GetFrequency() / factorK;
+//   return fcaudal;
 
 
-}
+// }
 
-void ISRCountPulse()
-{
-  pulseConter++;
-}
+// void ISRCountPulse()
+// {
+//   pulseConter++;
+// }
 
-float GetFrequency()
-{
-  pulseConter = 0;
+// float GetFrequency()
+// {
+//   pulseConter = 0;
 
-  interrupts();
-  delay(measureInterval);
-  noInterrupts();
+//   interrupts();
+//   delay(measureInterval);
+//   noInterrupts();
 
-  return (float)pulseConter * 1000 / measureInterval;
-}
+//   return (float)pulseConter * 1000 / measureInterval;
+// }
 
 
 int tiempoReal()

@@ -1,8 +1,8 @@
 // MAC de la placa: 0C:B8:15:C4:74:74
 
-// #include <DallasTemperature.h>
+#include <DallasTemperature.h>
 
-// #include <OneWire.h>
+#include <OneWire.h>
 
 //#include <RTClib.h>
 
@@ -33,15 +33,15 @@ String hora; //Utilizar String para obtener la hora completa. Buscar más inform
 
 DHT dht(pinDHT, DHTTYPE);
 //RTC_DS3231 rtc;
-// OneWire oneWireBus(pinTemperatura);
-// DallasTemperature sensor(&oneWireBus);
+OneWire oneWireBus(pinTemperatura);
+DallasTemperature sensor(&oneWireBus);
 
 void setup()
 {
   Serial.begin(9600);
   dht.begin();
-  attachInterrupt(digitalPinToInterrupt(pinCaudal), ISRCountPulse, RISING);
-  // sensor.begin(); 
+  // attachInterrupt(digitalPinToInterrupt(pinCaudal), ISRCountPulse, RISING);
+  sensor.begin(); 
 
   // if (rtc.lostPower()) {
   //   rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
@@ -54,10 +54,10 @@ void loop()
 {
   humedad_suelo = medirHumedadSuelo();
   humedad_ambiente = medirHT("humedad");
-  // temperatura_suelo = medirTemperaturaSuelo();
+  temperatura_suelo = medirTemperaturaSuelo();
   temperatura_ambiente = medirHT("temperatura");
   luz = medirLuz();
-  caudal = medirCaudal();
+  // caudal = medirCaudal();
 
   // DateTime tiempo = rtc.now();
 
@@ -72,10 +72,10 @@ void loop()
   {
     activarBomba(false);
   }
+
   enviarDatos(humedad_suelo, humedad_ambiente, temperatura_ambiente, caudal, luz, temperatura_suelo);
 
 //   yield();
-//   delay(10000);
   delay(1000);
 
 }
