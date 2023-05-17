@@ -17,7 +17,7 @@ const byte pinDHT = 12; //Es posible que se trate de un pin analógico.
 const byte pinLDR = 2;
 const byte pinHumedad = 4;
 // const byte pinRTC = 7; //Quizás haya que crear otro del RTC
-const byte pinTemperatura = 36;
+const byte pinTemperatura = 39;
 const byte pinRele = 13;
 
 int humedad_suelo;
