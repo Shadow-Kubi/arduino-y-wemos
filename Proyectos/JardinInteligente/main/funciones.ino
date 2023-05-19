@@ -101,7 +101,7 @@ void activarBomba( bool activa )
   }
 }
 
-void enviarDatos(int dhum_suelo, int dhum_amb, int dtemp_amb, int dcaudal, int dluz, int dtemp_suelo)
+void enviarPuertoSerie(int dhum_suelo, int dhum_amb, int dtemp_amb, int dcaudal, int dluz, int dtemp_suelo)
 {
 
   //Serial.println(dtiempo);
