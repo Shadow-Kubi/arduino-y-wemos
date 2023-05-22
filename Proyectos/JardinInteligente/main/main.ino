@@ -22,13 +22,15 @@ AdafruitIO_Feed *a_rele = io.feed("activar_bomba");
 
 
 #define DHTTYPE DHT11
+#define IO_LOOP_DELAY 10000
+unsigned long lastUpdate = 0;
 
 
 
 const byte pinCaudal = 14;
-const byte pinDHT = 12; //Es posible que se trate de un pin analógico.
-const byte pinLDR = 2;
-const byte pinHumedad = 4;
+const byte pinDHT = 12;
+const byte pinLDR = 34;
+const byte pinHumedad = 39;
 // const byte pinRTC = 7; //Quizás haya que crear otro del RTC
 const byte pinTemperatura = 16;
 const byte pinRele = 13;
@@ -82,7 +84,7 @@ void loop()
   io.run();
 
 
-  // caudal = medirCaudal();
+
   if (millis() > (lastUpdate + IO_LOOP_DELAY)) {
     // save count to the 'counter' feed on Adafruit IO
 
@@ -92,36 +94,31 @@ void loop()
     temperatura_suelo = medirTemperaturaSuelo();
     temperatura_ambiente = medirHT("temperatura");
     luz = medirLuz();
+    // caudal = medirCaudal();
 
     a_humedad_suelo->save(humedad_suelo);
     a_humedad_ambiente->save(humedad_ambiente);
     a_temperatura_suelo->save(temperatura_suelo);
-    a_temperatura_suelo->save(temperatura_ambiente);
+    a_temperatura_ambiente->save(temperatura_ambiente);
     a_luz->save(luz);
     a_caudal->save(caudal);
+
+    enviarPuertoSerie(humedad_suelo, humedad_ambiente, temperatura_ambiente, caudal, luz, temperatura_suelo);
+
+    if(humedad_suelo < 20)
+    {
+
+      activarBomba(true);
+
+    }
+    else
+    {
+      activarBomba(false);
+    }
 
     // after publishing, store the current time
     lastUpdate = millis();
   }
-  // DateTime tiempo = rtc.now();
-
-
-  if(humedad_suelo < 20)
-  {
-
-    activarBomba(true);
-
-  }
-  else
-  {
-    activarBomba(false);
-  }
-
-  enviarPuertoSerie(humedad_suelo, humedad_ambiente, temperatura_ambiente, caudal, luz, temperatura_suelo);
-
-//   yield();
-  delay(1000);
-
 }
 
 void handleMessage(AdafruitIO_Data *data) {

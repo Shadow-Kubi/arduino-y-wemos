@@ -10,7 +10,7 @@ const float factorK = 7.5;
 
 int medirHumedadSuelo()
 {
-  fhumedad_suelo = map(analogRead(pinHumedad), 0, 4095, 0, 100); // map(value, fromLow, fromHigh, toLow, toHigh) para mapear los valores (de 4096 a 100, pe)
+  fhumedad_suelo = map(analogRead(pinHumedad), 0, 4095, 0, 100); // map(value, fromLow, fromHigh, toLow, toHigh) para mapear los valores (de 4096 a 100, pe.)
 
   //Serial.print("Humedad del suelo: ");
   //Serial. println(humedad_suelo);
