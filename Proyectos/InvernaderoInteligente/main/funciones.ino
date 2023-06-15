@@ -3,34 +3,12 @@ int fluz;
 float fhumedad;
 float ftemperatura;
 
-float fcaudal;
-const int measureInterval = 2500;
-volatile int pulseConter;
-const float factorK = 7.5;
-
 int medirHumedadSuelo()
 {
   fhumedad_suelo = map(analogRead(pinHumedad), 0, 4095, 0, 100); // map(value, fromLow, fromHigh, toLow, toHigh) para mapear los valores (de 4096 a 100, pe.)
-
-  //Serial.print("Humedad del suelo: ");
-  //Serial. println(humedad_suelo);
-
   return fhumedad_suelo;
 }
 
-void abrirRele(bool open)
-{
-  if (open == true)
-  {
-      digitalWrite(pinRele, HIGH);
-      //Serial.println("Relé abierto");
-  }
-  else
-  {
-      digitalWrite(pinRele, LOW);
-      //Serial.println("Relé cerrado");
-  }
-}
 
 
 float medirHT( String dato ) //Dato puede ser "temperatura" o "humedad"
@@ -59,52 +37,33 @@ double medirTemperaturaSuelo()
   return sensor.getTempCByIndex(0);
 }
 
-//Funciones para medir el caudal.
-
-// float medirCaudal()
-// {
-//   fcaudal = GetFrequency() / factorK;
-//   return fcaudal;
-
-
-// }
-
-// void ISRCountPulse()
-// {
-//   pulseConter++;
-// }
-
-// float GetFrequency()
-// {
-//   pulseConter = 0;
-
-//   interrupts();
-//   delay(measureInterval);
-//   noInterrupts();
-
-//   return (float)pulseConter * 1000 / measureInterval;
-// }
-
-
-int tiempoReal()
-{}
-
 void activarBomba( bool activa )
 {
   if (activa)
   {
-    digitalWrite(pinRele, HIGH);
+    digitalWrite(pinReleB, HIGH);
   }
   else
   {
-    digitalWrite(pinRele, LOW);
+    digitalWrite(pinReleB, LOW);
   }
 }
 
-void enviarPuertoSerie(int dhum_suelo, int dhum_amb, int dtemp_amb, int dcaudal, int dluz, int dtemp_suelo)
+void activarVentilacion( bool activa )
+{
+  if (activa)
+  {
+    digitalWrite(pinReleV, HIGH);
+  }
+  else
+  {
+    digitalWrite(pinReleV, LOW);
+  }
+}
+
+void enviarPuertoSerie(int dhum_suelo, int dhum_amb, int dtemp_suelo, int dtemp_amb, int dluz)
 {
 
-  //Serial.println(dtiempo);
   Serial.print("Humedad del suelo: ");
   Serial.println(dhum_suelo);
   Serial.print("Humedad del ambiente: ");
@@ -113,10 +72,9 @@ void enviarPuertoSerie(int dhum_suelo, int dhum_amb, int dtemp_amb, int dcaudal,
   Serial.println(dtemp_suelo);
   Serial.print("Temperatura del ambiente: ");
   Serial.println(dtemp_amb);
-  Serial.print("Caudal: ");
-  Serial.println(dcaudal);
   Serial.print("Luz: ");
   Serial.println(dluz);
+  Serial.println("-------------------------------");
 
 
 }
