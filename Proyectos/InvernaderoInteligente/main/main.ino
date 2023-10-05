@@ -4,7 +4,7 @@
 #include <OneWire.h>
 #include <Wire.h>
 #include "DHT.h"
-#include "D:\Users\migue\Documents\arduino-y-wemos\Proyectos\InvernaderoInteligente\main\config.h"
+#include "C:\Users\ACER-TALLER\Documents\arduino-y-wemos\Proyectos\InvernaderoInteligente\main\config.h"
 
 // Llamamos a todos los feeds de Adafruit IO:
 
